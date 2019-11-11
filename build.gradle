@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-version "3.0.1.BUILD-SNAPSHOT"
+version "3.1.0.BUILD-SNAPSHOT"
 group "org.grails.plugins"
 
 
@@ -60,7 +60,8 @@ dependencies {
     testCompile "com.icegreen:greenmail:1.5.10"
 
     compile "javax.mail:javax.mail-api:1.6.2"
-    compile "com.sun.mail:javax.mail:1.6.2"
+    compile 'com.sun.mail:jakarta.mail:1.6.4'
+    compile 'com.sun.activation:jakarta.activation:1.2.1' // Required for Java 9+ modules
 }
 
 apply from: "${rootProject.projectDir}/gradle/grailsPublish.gradle"
