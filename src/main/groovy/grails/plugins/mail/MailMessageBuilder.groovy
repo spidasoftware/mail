@@ -45,7 +45,7 @@ class MailMessageBuilder {
 
     private static final Logger log = LoggerFactory.getLogger(MailMessageBuilder.class)
 
-    final MailSender mailSender
+    MailSender mailSender
     final MailMessageContentRenderer mailMessageContentRenderer
 
     final String defaultFrom
@@ -105,7 +105,7 @@ class MailMessageBuilder {
         MailMessage message = finishMessage()
 
         if (log.traceEnabled) {
-            log.trace("Sending mail ${getDescription(message)}} ...")
+            log.trace("Sending mail ${getDescription(message)} ...")
         }
 
         def sendingMsg = message instanceof MimeMailMessage ? message.mimeMessage : message
@@ -117,7 +117,10 @@ class MailMessageBuilder {
             sendingMsg = new SMTPMessage(sendingMsg)
             sendingMsg.envelopeFrom = envelopeFrom
         }
-
+        
+		//MailGrailsPlugin.groovy removes and recreates the mailSender on config change
+		//mailSender can be null if we don't do this after a config change
+		mailSender = grails.util.Holders.grailsApplication.mainContext.getBean("mailSender")
 		if(async){
 			executorService.execute({
 				try{
