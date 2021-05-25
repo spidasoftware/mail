@@ -153,8 +153,10 @@ sendMail {
                     password = config.password
                 if (config.protocol)
                     protocol = config.protocol
-                if (config.props instanceof Map && config.props)
+                if (config.props instanceof org.grails.config.NavigableMap && config.props)
                     javaMailProperties = config.props.toFlatConfig()
+                if (config.props instanceof Map && config.props)
+                    javaMailProperties = config.props
             }
         }
     }
