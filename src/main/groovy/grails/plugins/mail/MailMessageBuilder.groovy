@@ -81,6 +81,7 @@ class MailMessageBuilder {
     }
 
     private MailMessage getMessage() {
+		mailSender = grails.util.Holders.grailsApplication.mainContext.getBean("mailSender")
         if (!message) {
             if (mimeCapable) {
                 helper = new MimeMessageHelper(mailSender.createMimeMessage(), multipart)
@@ -97,11 +98,14 @@ class MailMessageBuilder {
                 message.setTo(defaultTo)
             }
         }
-
         message
     }
 
     MailMessage sendMessage(ExecutorService executorService) {
+		//MailGrailsPlugin.groovy removes and recreates the mailSender on config change
+		//mailSender can be null if we don't do this after a config change
+		mailSender = grails.util.Holders.grailsApplication.mainContext.getBean("mailSender")
+
         MailMessage message = finishMessage()
 
         if (log.traceEnabled) {
@@ -118,9 +122,6 @@ class MailMessageBuilder {
             sendingMsg.envelopeFrom = envelopeFrom
         }
         
-		//MailGrailsPlugin.groovy removes and recreates the mailSender on config change
-		//mailSender can be null if we don't do this after a config change
-		mailSender = grails.util.Holders.grailsApplication.mainContext.getBean("mailSender")
 		if(async){
 			executorService.execute({
 				try{
@@ -299,6 +300,7 @@ class MailMessageBuilder {
 
     void html(CharSequence text) {
         Assert.notNull(text, "html cannot be null")
+		mailSender = grails.util.Holders.grailsApplication.mainContext.getBean("mailSender")
 
         if (mimeCapable) {
             htmlContent = text.toString()
