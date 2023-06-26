@@ -385,6 +385,8 @@ class MailMessageBuilder {
     }
 
     protected doAdd(String id, String contentType, InputStreamSource toAdd, boolean isAttachment) {
+        mailSender = grails.util.Holders.grailsApplication.mainContext.getBean("mailSender")
+
         if (!mimeCapable) {
             throw new GrailsMailException("Message is not an instance of org.springframework.mail.javamail.MimeMessage, cannot attach bytes!")
         }
