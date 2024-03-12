@@ -46,14 +46,6 @@ sendMail {
 
     def license = "APACHE"
     def organization = [ name: "Grails Plugin Collective", url: "http://github.com/gpc" ]
-    def developers = [
-        [ name: "Craig Andrews", email: "candrews@integralblue.com" ],
-        [ name: "Luke Daley", email: "ld@ldaley.com" ],
-        [ name: "Peter Ledbrook", email: "pledbrook@vmware.com" ],
-        [ name: "Jeff Brown", email: "jbrown@vmware.com" ],
-        [ name: "Graeme Rocher", email: "grocher@vmware.com" ],
-        [ name: "Marc Palmer", email: "marc@grailsrocks.com" ]
-    ]
 
     def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMAIL" ]
     def scm = [ url: "http://github.com/gpc/grails-mail" ]
